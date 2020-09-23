@@ -53,8 +53,10 @@ function buildNavMen(sections) {
         listItem.appendChild(anchor);
         fragment.appendChild(listItem);
     }
-    // use DcoumentFragment temporarly change to display none and block for navBarUList
+    
+    navBarUList.style.display = "none";
     navBarUList.appendChild(fragment);
+    navBarUList.style.display = "flex";
 }
 
 // Add class 'active' to section when near top of viewport
@@ -88,13 +90,56 @@ function onClick(event) {
 
 // Build menu 
 document.addEventListener('DOMContentLoaded', buildNavMen(sections));
+
 // Scroll to section on link click
-const anchorElements = document.querySelectorAll('a');
+const anchorElements = document.querySelectorAll('li a');
 for(anchorElement of anchorElements) {
     anchorElement.addEventListener('click', onClick);
 }
 // Set sections as active
-
 document.addEventListener('scroll', toggleActiveSection, {passive: true});
 
+/**
+ * end required features impl
+ * back to top impl
+ */
+
+// Set a variable for our button element.
+const scrollToTopButton = document.getElementById('js-top');
+
+// Let's set up a function that shows our scroll-to-top button if we scroll beyond the height of the initial window.
+const scrollFunc = () => {
+  // Get the current scroll value
+  let y = window.scrollY;
+  
+  // If the scroll value is greater than the window height, let's add a class to the scroll-to-top button to show it!
+  if (y > 0) {
+    scrollToTopButton.className = "top-link show";
+  } else {
+    scrollToTopButton.className = "top-link hide";
+  }
+};
+
+window.addEventListener("scroll", scrollFunc);
+
+const scrollToTop = () => {
+  // Let's set a variable for the number of pixels we are from the top of the document.
+  const c = document.documentElement.scrollTop || document.body.scrollTop;
+  
+  // If that number is greater than 0, we'll scroll back to 0, or the top of the document.
+  // We'll also animate that scroll with requestAnimationFrame:
+  // https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
+  if (c > 0) {
+    window.requestAnimationFrame(scrollToTop);
+    // ScrollTo takes an x and a y coordinate.
+    // Increase the '10' value to get a smoother/slower scroll!
+    window.scrollTo(0, c - c / 10);
+  }
+};
+
+// When the button is clicked, run our ScrolltoTop function above!
+scrollToTopButton.onclick = function(e) {
+  e.preventDefault();
+  scrollToTop();
+}
 
