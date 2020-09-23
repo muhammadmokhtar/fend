@@ -19,7 +19,7 @@
 */
 const sections = document.getElementsByTagName('section'); 
 const navBarUList = document.getElementById('navbar__list');
-
+const liaIdPrefix = "link-to-";
 /**
  * End Global Variables
  * Start Helper Functions
@@ -48,6 +48,7 @@ function buildNavMen(sections) {
     for (const section of sections) {
         const listItem = document.createElement('li');
         const anchor = document.createElement('a');
+        anchor.setAttribute("id", liaIdPrefix + section.getAttribute("id"));
         anchor.setAttribute("href", "#" + section.getAttribute("id"));
         anchor.innerText = section.dataset.nav;
         listItem.appendChild(anchor);
@@ -65,8 +66,12 @@ function toggleActiveSection() {
         const section = document.getElementById('section' + i);
         if (nearTopOfViewport(section)) {
             section.classList.add("active");
+            const liaElement = document.getElementById(liaIdPrefix + section.getAttribute("id"));
+            liaElement.className = "show-active-link";
         } else {
             section.classList.remove("active");
+            const liaElement = document.getElementById(liaIdPrefix + section.getAttribute("id"));
+            liaElement.className = "hide-active-link";
         }
     }
 }

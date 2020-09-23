@@ -213,6 +213,13 @@ section.active .landing__container::after {
     transform: rotate(360deg) translate(-1em) rotate(-360deg);
   }
 }
+.show-active-link {
+  background: lightgrey;
+}
+
+.hide-active-link {
+  background: unset;
+}
 
 /*# sourceMappingURL=styles.css.map */
 .top-link {
